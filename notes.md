@@ -15,11 +15,11 @@
 
 ## Recurrent Neural Networks
 
-# General
+### General
 
 * update
 
-# Hyperparameters
+### Hyperparameters
 
 * 
 
