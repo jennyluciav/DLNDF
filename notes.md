@@ -70,6 +70,11 @@
 
 * A method which represents data with lower dimensional vectors to improve the networks learning ability by allowing the network to more efficiently process data with a large number of classes. 
 * With word embeddings, the network is able to learn semantic relationships between words. Word embeddings are learned with Word2Vec
+* Word2Vec is a computationally efficient predictive model to learn word embeddings from raw text. 
+	* Two types: Continuous Bag-of-Words (CBOW) or Skip-gram
+	* CBOW predicts target words from source context-words and is good on small datasets
+	* Skip-gram predicts source context-words from the target words and is good for larger data sets as it treats each context-target pair as a new observation in contrast to CBOW which treats the entire context as one observation. (You pass in a word and it predicts the words surrounding it)
+* Vanilla definition of 'context': a window of words surrounding the target word.
 
 
 
