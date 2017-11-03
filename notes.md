@@ -8,7 +8,7 @@
 
 ## General
 
-### General Hyperparameters
+### Hyperparameters
 
 * A variable that needs to be set before you can train your algorithm
 * There are two categories: 
@@ -67,6 +67,9 @@
 * Embedding sizes, for text, are generally between 50-200 but could even be anywhere up to 1000
 
 ### Embeddings and Word2Vec
+
+* A method which represents data with lower dimensional vectors to improve the networks learning ability by allowing the network to more efficiently process data with a large number of classes. 
+* With word embeddings, the network is able to learn semantic relationships between words. Word embeddings are learned with Word2Vec
 
 
 
