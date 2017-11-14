@@ -1,12 +1,22 @@
 # Udacity Deep Learning Nanodegree Foundations
 
 * [General](#general)
+* [Tensorflow](#tensorflow)
 * [Neural Networks](#neural-networks)
 * [Convolutional Neural Networks](#convolutional-neural-networks)
+* [Transfer Learning](#transfer-learning)
 * [Recurrent Neural Networks](#recurrent-neural-networks)
 * [Generative Adversarial Networks](#generative-adversarial-networks)
 
 ## General
+
+### Data Processing
+
+* StratifiedShuffleSplit: Shuffles and splits data into training, validation and test sets ensuring the distribution of classes in each set is identical. (scikit-learn)
+
+### Definitions/Key Terms
+
+* Logits: Values used as an input to the softmax layer. 
 
 ### Hyperparameters
 
@@ -44,6 +54,14 @@
 		* In contrast, if the model is too simple, it simple won't be able to learn the underlying patterns of your data. Hence, it is better to increase the complexity of your model by adding units/layers until the model starts to noticeable overfit. Then, you can implement regularization techniques to alleviate the overfitting. 
 	* According to Andrej Karpathy, you generally want to stay within 2-3 layers for neural networks, adding more doesn't have much of an effect with the exception of cnn's which perform much better with deeper layers. 
 
+### Tensorflow Functions
+
+* [tf.nn.embedding_lookup(parameters, ids)](https://www.tensorflow.org/api_docs/python/tf/nn/embedding_lookup): Creates a word2vec embedding lookup layer
+
+## Tensorflow
+
+* TODO: Add notes on creating network layers  
+
 ## Neural Networks
 
 * This section was completed before this notes document was compiled and will be updated. (I'm more of a handwritten notes guy but I need to practice getting my thoughts out there)
@@ -52,6 +70,14 @@
 
 * This section was completed before this notes document was compiled and will be updated. 
 
+## Transfer Learning
+
+* In many cases you can build off of huge networks that have already been trained such as VGGnet
+	* Would save you a lot of training time!
+	* Keep the convolutional layers as they've already been trained to detect features and replace the fully connected layers to learn your classification
+* Need to scale your images to the image size the pretrained network was initially trained on
+* [Repo]( https://github.com/machrisaa/tensorflow-vgg) for pretrained VGGnet
+
 ## Recurrent Neural Networks
 
 ### General
@@ -59,12 +85,19 @@
 * Have more flexibility than a vanilla neural network in terms of not being constrained to a fixed input/output size
 * RNN's allow you to operate over sequences
 
+### General Architecture and Code
+
+* TODO: Add a diagram of sample architecture here
+
 ### RNN Hyperparameters
 
 * Two main choices: cell type (LSTM, Vanilla RNN or Gated Recurrent Unit) and model depth/layers
 * In practice, LSTM's and GRU's perform better than Vanilla RNN's (choice is task dependant) (LSTM's more popular)
 * Some research suggests LSTM's converge faster and produce better results
 * Embedding sizes, for text, are generally between 50-200 but could even be anywhere up to 1000
+* Number of LSTM cells per layer: more is better, common numbers are 128, 256, 512, etc. 
+* Number of LSTM layers: start with 1 and increase if underfitting
+* Batch size (number of reviews being fed into each training iteration): As large as you can hold in memory
 
 ### Embeddings and Word2Vec
 
@@ -75,6 +108,20 @@
 	* CBOW predicts target words from source context-words and is good on small datasets
 	* Skip-gram predicts source context-words from the target words and is good for larger data sets as it treats each context-target pair as a new observation in contrast to CBOW which treats the entire context as one observation. (You pass in a word and it predicts the words surrounding it)
 * Vanilla definition of 'context': a window of words surrounding the target word.
+* Negative Sampling: Instead of updating all the weights after showing the network a single example, only a subset of the weights is updated to make it more efficient. Weights are updated for the correct label but only some of the weights are updated for incorrect labels. 
+	* This sounds a lot like the stochastic localized linear updating method that I was brainstorming the other day... 
+
+### Sentiment Analysis with an RNN
+
+* Trained an RNN for binary sentiment analysis (positive/negative) on labelled movie reviews.
+* The network architecture consists of a word embedding layer followed by a layer of LSTM cells and then finally an output sigmoid layer.
+	* We only care about the final sigmoid output and can ignore the rest. 
+	* The ouput of the sigmoid cell will represent the probability of the classification being positive
+* Tips:
+	* Remove reviews of zero length and truncate reviews to a maximum size to speed upu training
+	* For reviews shorter than your maximum length, pad the left with zeros
+
+
 
 
 
