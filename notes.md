@@ -56,7 +56,10 @@
 
 ### Tensorflow Functions
 
-* [tf.nn.embedding_lookup(parameters, ids)](https://www.tensorflow.org/api_docs/python/tf/nn/embedding_lookup): Creates a word2vec embedding lookup layer
+* [tf.nn.embedding_lookup(parameters, ids)](https://www.tensorflow.org/api_docs/python/tf/nn/embedding_lookup): Returns a tensor with the embedded vectors
+* [tf.contrib.rnn.BasicLSTMCell(num_units)](https://www.tensorflow.org/api_docs/python/tf/contrib/rnn/BasicLSTMCell): Creates a layer of LSTM cells
+* [tf.contrib.rnn.DropoutWrapper(layer, output_keep_prob)](https://www.tensorflow.org/api_docs/python/tf/contrib/rnn/DropoutWrapper): Wraps lstm cells in another cell and applies dropout to the input and output
+* [tf.contrib.rnn.MultiRNNCell([prev_layer] * num_layers)](https://www.tensorflow.org/api_docs/python/tf/contrib/rnn/MultiRNNCell): Creates multiple LSTM layers
 
 ## Tensorflow
 
@@ -97,7 +100,10 @@
 * Embedding sizes, for text, are generally between 50-200 but could even be anywhere up to 1000
 * Number of LSTM cells per layer: more is better, common numbers are 128, 256, 512, etc. 
 * Number of LSTM layers: start with 1 and increase if underfitting
+	* Additional layers will allow capturing of more complex sequences. Overfitting can be prevented by wrapping cells in a dropout layer.
 * Batch size (number of reviews being fed into each training iteration): As large as you can hold in memory
+* Sequence Length: Should try values close to the length of sentences you're trying to generate. 
+	* Look at the average number of words per line in the training data to get an estimate. 
 
 ### Embeddings and Word2Vec
 
@@ -110,6 +116,7 @@
 * Vanilla definition of 'context': a window of words surrounding the target word.
 * Negative Sampling: Instead of updating all the weights after showing the network a single example, only a subset of the weights is updated to make it more efficient. Weights are updated for the correct label but only some of the weights are updated for incorrect labels. 
 	* This sounds a lot like the stochastic localized linear updating method that I was brainstorming the other day... 
+* Can use this tf function to create the embedding layer: tf.contrib.layers.embed_sequence(input_data, vocab_size, embed_dim)
 
 ### Sentiment Analysis with an RNN
 
