@@ -128,6 +128,81 @@
 	* Remove reviews of zero length and truncate reviews to a maximum size to speed upu training
 	* For reviews shorter than your maximum length, pad the left with zeros
 
+### Sequence to Sequence
+
+* Can handle sequential data to output
+* A 'many to many' Rnn architecture that can be trained for chatbots and translation models
+* Applications: 
+	* Translations 
+	* Summarization bot ()
+	* Q & A bot
+	* Chatbot
+* Types of chatbot conversation frameworks:
+	* Retrieval-based models (closed domain, eg. customer service requests)
+	* Generative-based models 
+		* generate new responses - technology isn't there yet, can suffer in quality (grammer, spelling, context, etc.)
+
+## Generative Adversarial Networks
+
+### General Notes
+
+* Invented by Ian Goodfellow
+* Applications:
+	* Used for generating realistic data
+		* Stackgan model: taking a description of a bird and generating an image to match it. You can generate an endless amount of novel images (iGAN - a tool where an artist can sketch an image and the GAN will generate similar images)
+		* Pix2Pix: Can be used for image to image translation, drawing of cats to images of cats, blueprints to models
+	* Photos of day scences to night scenes
+	* Photos of a person to a sketch of a person
+	* Can even apply it to videos! A Stanford tool called CycleGAN was used to change a horse to a zebra in a video!
+		* Background was changed too because of the different environments you'd find each in
+	* Imitation Learning: Can learn to imitate actions 
+* A form of semi-supervised learning
+* GANs allow you to generate an entire image in parallel in contrast to generating each pixel one at a time.
+* Training a GAN is different from training a supervised learning model since there is no output to associate each image with. They're trained by adjusting the parameters that maximize the probability that the generator will produce the training data set. 
+	* This can be computationally expensive.  
+	* This can be approximated by including a second network, the discriminator network. This network is shown real images from the training set and fake images produced by the generator network and tries to assign a high probability to real images(1) and low probability to the generated images. 
+	* Generator is trained to output images that the discriminator would assign a high probability. 
+	* Ideally they converge to a point where there is a uniform probability of the image being either real or fake.
+
+### Game Theory
+
+* The two networks are adversarially in conflict with one another and can be understood mathematically with game theory
+* Founded by John Von Neumann and extended by John Nash
+* Can be used to model cooperation and conflict between two rational agents in any situation where each agent can choose from a set of possible actions, which leads to a well-defined pay-off
+* Most machine learning models so far have been based on optimization of a cost-function for chosen parameters
+	* With GANs, there are two networks you're training adversarially each with their own cost. The cost of the second network being the inverse cost function of the first. 
+	* From game theory, equilibrium is reached once neither player can improve thier situation without changing the other player's strategy. For GANs this happens when you have the maximum value for the discriminator and the minimum point for the generator. A saddle point on the optimization graph. 
+* From game theory, we can show that if both networks are big enough, there is a point where the generator density equals the true density and the discriminator outputs 1/2 everywhere. 
+	* May not find it in practice because the optimization algorithms may not find the true minimum. (The generator could learn to produce clusters of representative density that the discriminator eventually isn't tricked by leading the the generator then producing a new convincing cluster)
+* Minimax: a strategy of always minimizing the maximum possible loss resulting from the choice a player makes.
+* Nash equilibrium: The equilibrium of a game where no player has any incentive to deviate from their strategy after considering their opponents choice
+
+### Training Tips and Tricks
+
+* For simple tasks, you can use a fully connected architecture with no convolutions or recurrence
+* Both generator and discriminator should have at least one hidden layer 
+* Leaky ReLU is a popular activation function (many others will work)
+	* Helps to ensure gradients flow through entire architecture (The discriminator network being at the end of the architecture needs to be able to see the gradient)
+* For the output layer of the generator, a tanh activation function which allows your data to be scaled between -1 and 1
+* Define individual loss functions for the generator and the discriminator and then assign an optimizer to minimize loss for discriminator while simultaneously assigning an optimizer to minimize loss for teh discriminator
+	* Training the discriminator to output a 1 for real images and 0 for fake
+	* AdamOptimizer is good
+	* Can use a sigmoid_cross_entropy loss for the discriminator
+	* Make sure you use numerically stable cross-entropy which uses the logits (before sigmoid - can introduce rounding error if you use the probabilities)
+	* Generator loss withh also be cross_entropy but with the labels flipped
+* For larger images you can replace inner layers with convolution layers in the generator network 
+	* Instead of decreasing the size of the feature maps per layer you would increase it in this case (The stride in the output map is greater than the input match)
+	* Use batch normalization on most layers (DCGAN authors recommend using batch normalization on every layer except the output layer of the generator and the input layer of the discriminator)
+		* Necessary for deep GANs
+	
+
+
+
+
+
+
+
+
 
 
 
