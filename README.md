@@ -1,6 +1,6 @@
 # Udacity Deep Learning Nanodegree Foundations
 
-Projects and notes from Udacity's Deep Learning Nanodegree Foundations [course](https://www.udacity.com/course/deep-learning-nanodegree-foundation--nd101) and [Github repo](https://github.com/udacity/deep-learning). 
+Projects and personal notes for Udacity's Deep Learning Nanodegree Foundations [course](https://www.udacity.com/course/deep-learning-nanodegree-foundation--nd101). The course's contents can be found on their Github repo, [here](https://github.com/udacity/deep-learning). 
 
 * [General](#general)
 * [Tensorflow](#tensorflow)
